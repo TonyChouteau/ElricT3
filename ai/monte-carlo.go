@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/TonyChouteau/ElricT3/engine"
+	"github.com/TonyChouteau/elrict3/engine"
 )
 
 /*
