@@ -54,7 +54,7 @@ func Serve() {
 	r.GET("/ai/:board", moveAI)
 
 	//err := http.ListenAndServe(":8082", r)
-	err := http.ListenAndServeTLS(":8081", "/etc/letsencrypt/live/www.domain.com/fullchain.pem", "/etc/letsencrypt/live/www.domain.com/privkey.pem", r)
+	err := http.ListenAndServeTLS(":8082", "/etc/letsencrypt/live/www.domain.com/fullchain.pem", "/etc/letsencrypt/live/www.domain.com/privkey.pem", r)
 
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
