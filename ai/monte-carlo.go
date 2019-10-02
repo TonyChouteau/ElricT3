@@ -19,6 +19,9 @@ const (
 func testMove(board engine.Matrix3x3, move int, color int) float64 {
 
 	board, status := engine.Play(board, move, color)
+	if status == color {
+		return 1
+	}
 	if len(engine.ListLegal(board)) == 0 {
 		return 0.5
 	}
@@ -26,26 +29,31 @@ func testMove(board engine.Matrix3x3, move int, color int) float64 {
 	backupBoard := engine.CopyBoard(board)
 
 	var nbOfWins float64
-	n := 2500
+	n := 5000
 
 	for i := 0; i < n; i++ {
 		testBoard := engine.CopyBoard(backupBoard)
 		currentColor := engine.NextColor(color)
 
+		p:=0
 		finished := false
 		for !finished {
 			legalMoves := engine.ListLegal(testBoard)
 			testBoard, status = engine.Play(testBoard, legalMoves[rand.Intn(len(legalMoves))], currentColor)
 			if status == color {
-				nbOfWins++
+				nbOfWins+=1
 				finished = true
 			} else if status == engine.NextColor(color) {
+				if p==0 {
+					nbOfWins-=float64(n)
+				}
 				finished = true
 			} else if status == 3 {
 				nbOfWins += 0.5
 				finished = true
 			}
 			currentColor = engine.NextColor(currentColor)
+			p++
 		}
 	}
 

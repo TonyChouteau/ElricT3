@@ -51,10 +51,14 @@ func Serve() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"https://www.tonychouteau.fr", "https://www.thomaslepercq.fr/elrict3"},
+	}))
+
 	r.GET("/ai/:board", moveAI)
 
 	//err := http.ListenAndServe(":8082", r)
-	err := http.ListenAndServeTLS(":8082", "/etc/letsencrypt/live/www.domain.com/fullchain.pem", "/etc/letsencrypt/live/www.domain.com/privkey.pem", r)
+	err := http.ListenAndServeTLS(":8082", "/etc/letsencrypt/live/vps.tonychouteau.fr/fullchain.pem", "/etc/letsencrypt/live/vps.tonychouteau.fr/privkey.pem", r)
 
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
