@@ -46,7 +46,7 @@ func testMove(board engine.Matrix3x3, move int, color int) float64 {
 			} else if status == engine.NextColor(color) {
 				if p==0 {
 					nbOfWins-=float64(n)
-				} else if {
+				} else {
 					nbOfWins -= 1;	
 				}
 				finished = true
