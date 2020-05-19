@@ -10,34 +10,6 @@ import (
 	"github.com/TonyChouteau/elrict3/ai"
 )
 
-/*
-Data : Struct
-*/
-/*type Data struct {
-	Board     engine.Matrix3x3 `json:"board"`
-	ListLegal []int            `json:"listLegal"`
-	IsLegal   bool             `json:"isLegal"`
-}*/
-
-/*func test(c *gin.Context) {
-	//countByType := storage.CountProjects(c)
-	board := engine.CreateM()
-	fmt.Println(board)
-
-	board, _ = engine.Play(board, 5, CROSS)
-
-	list := engine.ListLegal(board)
-	fmt.Println(list)
-	test1 := engine.IsLegal(board, 5)
-	fmt.Println(test1)
-
-	c.JSON(200, Data{
-		board,
-		list,
-		test1,
-	})
-}*/
-
 func moveAI(c *gin.Context) {
 	board := c.Param("board")
 	result := ai.GetBestMove(board)
@@ -51,10 +23,19 @@ func Serve() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"https://www.tonychouteau.fr", "https://www.thomaslepercq.fr/elrict3"},
+		Methods: “GET, PUT, POST, DELETE”,
+		ExposedHeaders: “”,
+		Credentials: false,
+		ValidateHeaders: false,
+	}))
+    
+
 	r.GET("/ai/:board", moveAI)
 
 	//err := http.ListenAndServe(":8082", r)
-	err := http.ListenAndServeTLS(":8082", "/etc/letsencrypt/live/www.domain.com/fullchain.pem", "/etc/letsencrypt/live/www.domain.com/privkey.pem", r)
+	err := http.ListenAndServeTLS(":8082", "/etc/letsencrypt/live/vps.tonychouteau.fr/fullchain.pem", "/etc/letsencrypt/live/vps.tonychouteau.fr/privkey.pem", r)
 
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
