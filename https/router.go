@@ -24,13 +24,10 @@ func Serve() {
 	r.Use(cors.Default())
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"https://www.tonychouteau.fr", "https://www.thomaslepercq.fr/elrict3"},
-		Methods: “GET, PUT, POST, DELETE”,
-		ExposedHeaders: “”,
-		Credentials: false,
-		ValidateHeaders: false,
+		AllowOrigins:     []string{"https://www.tonychouteau.fr", "https://www.thomaslepercq.fr/elrict3"},
+		AllowMethods:     []string{"GET", "PUT", "POST", "DELETE"},
+		AllowCredentials: false,
 	}))
-    
 
 	r.GET("/ai/:board", moveAI)
 
